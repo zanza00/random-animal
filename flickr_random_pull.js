@@ -29,7 +29,7 @@ function flickrPull() {
                     $('a#link-text').text('Link to original photo on Flickr');
                     $('.loading').hide(400);
                     $('#background-image').css({
-                        'background-image': 'url('+photoURL+')'
+                        'background-image': 'url(' + photoURL + ')'
                     });
                     return false;
                 }
@@ -44,4 +44,7 @@ function reload() {
     flickrPull()
 }
 
-$(document).ready(flickrPull());
+
+$(function () {
+    flickrPull();
+});
