@@ -64,6 +64,8 @@ img.center {
     height: 100%;
     background-size: cover;
     background-position: 0% 10%;
+    -webkit-filter: grayscale(70%) blur(5px);
+    filter: grayscale(70%) blur(5px);
     filter: grayscale(70%) blur(5px);
 }
 
