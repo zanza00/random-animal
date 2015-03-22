@@ -21,10 +21,6 @@ function flickrPull() {
                         title: item.title,
                         id: 'animal-image'
                     }).appendTo("#image");
-                    //$('<a>').attr({
-                    //    href: "http://www.flickr.com/photos/" + item.owner + "/" + item.id,
-                    //    id: 'link-text'
-                    //}).appendTo('#text');
                     $('#text').html(
                         '<h2>' + item.title + '</h2>' +
                         '<a href="http://www.flickr.com/photos/' + item.owner + '/' + item.id +'"> Link to Original image on Flikr</a>'
