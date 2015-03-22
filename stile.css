@@ -1,6 +1,6 @@
 body {
     background-color: #cbcbcb;
-    margin-top: 0px;
+    margin-top: 0;
 }
 
 a {
@@ -15,17 +15,21 @@ img.center {
     border-color: #111111;
 }
 
+h2 {
+    font-size: 36px;
+    margin-bottom: 0;
+}
+
 #container {
     z-index: 9999;
     width: 640px;
     margin-left: auto;
     margin-right: auto;
-    font-size: 26px;
     font-family: 'Open Sans', sans-serif;
 }
 
 #text {
-    color: darkgreen;
+    color: black;
     padding-bottom: 20px;
 }
 
@@ -81,7 +85,6 @@ img.center {
 }
 
 #about {
-    
     width: 500px;
     margin-left: auto;
     margin-right: auto;
