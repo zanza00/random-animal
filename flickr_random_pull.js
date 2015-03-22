@@ -6,6 +6,7 @@ function flickrPull() {
     var animalSearch = animalChoices[getRandomInt(0, animalChoices.length)];
     //cambio il titolo della pagina, mettendo il nome dell'animale con la prima lettera maiuscola
     document.title = animalSearch[0].toUpperCase() + animalSearch.slice(1) + ' Flikr Demo';
+    $("#favicon").attr('href', 'icons/' + animalSearch + '.png');
     $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=6902943f0a9e5a3d4e84475e392ca8e7&format=json&nojsoncallback=1&sort=relevance&text=' + animalSearch,
         function (data) {
             var randInt = getRandomInt(0, data.photos.perpage);
