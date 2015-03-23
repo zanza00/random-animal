@@ -8,45 +8,46 @@
     <script src="lib/crossroads.min.js"></script>
     <script src="lib/hasher.min.js"></script>
     <script>
+        var DEFAULT_HASH = 'home';
+
         //setup crossroads
-        crossroads.addRoute('foo');
+        crossroads.addRoute('home');
+        crossroads.addRoute('lorem');
         crossroads.addRoute('lorem/ipsum');
         crossroads.routed.add(console.log, console); //log all routes
-        crossroads.addRoute('/photo/{id}', function (id) {
-            console.log(id);
-            $('#view').html('superduper' + id);
-        });
-        crossroads.addRoute('/', function () {
-            $('#view').load('main.html');
-        });
-        crossroads.bypassed.add(function (request) {
-            console.error(request + ' seems to be a dead end...');
-        });
 
-        //Listen to hash changes
-        window.addEventListener("hashchange", function () {
-            var route = '/';
-            var hash = window.location.hash;
-            if (hash.length &gt; 0) {
-                route = hash.split('#').pop();
-            }
-            crossroads.parse(route);
-        });
+        //setup hasher
 
-        // trigger hashchange on first page load
-        window.dispatchEvent(new CustomEvent("hashchange"));
-        crossroads.parse(document.location.pathname);
+        //only required if you want to set a default value
+        if(! hasher.getHash()){
+            hasher.setHash(DEFAULT_HASH);
+        }
+
+        function parseHash(newHash, oldHash){
+            // second parameter of crossroads.parse() is the "defaultArguments" and should be an array
+            // so we ignore the "oldHash" argument to avoid issues.
+            crossroads.parse(newHash);
+        }
+        hasher.initialized.add(parseHash); //parse initial hash
+        hasher.changed.add(parseHash); //parse hash changes
+
+        hasher.init(); //start listening for hash changes
 
     </script>
 </head>
 <body>
-<ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#/photo/134577">photo 1</a></li>
-    <li><a href="/#/photo/2">Page 2</a></li>
-    <li><a href="foo">foo</a></li>
-    <li><a href="lorem/ipsum">lorem/ipsum</a></li>
-</ul>
+
+    <ul>
+        <li>
+            <a href="#/home">home</a>
+        </li>
+        <li>
+            <a href="#/lorem">lorem</a>
+        </li>
+        <li>
+            <a href="#/lorem/ipsum">lorem/ipsum</a>
+        </li>
+    </ul>
 <div id="view"></div>
 
 </body>
