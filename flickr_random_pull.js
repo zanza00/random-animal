@@ -26,7 +26,6 @@ function flickrPull() {
                         '<h2>' + item.title + '</h2>' +
                         '<a href="http://www.flickr.com/photos/' + item.owner + '/' + item.id +'"> Link to Original image on Flikr</a>'
                     );
-                    $('a#link-text').text('Link to original photo on Flickr');
                     $('.loading').hide(400);
                     $('#background-image').css({
                         'background-image': 'url(' + photoURL + ')'
