@@ -70,7 +70,6 @@ h2 {
     background-position: 0% 10%;
     -webkit-filter: grayscale(70%) blur(5px);
     filter: grayscale(70%) blur(5px);
-    filter: grayscale(70%) blur(5px);
 }
 
 #text-box {
