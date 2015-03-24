@@ -11,9 +11,9 @@
         var DEFAULT_HASH = 'home';
 
         //setup crossroads
-        crossroads.addRoute('home');
+        crossroads.addRoute('home', {});
         crossroads.addRoute('lorem');
-        crossroads.addRoute('lorem/ipsum');
+        crossroads.addRoute('lorem/ipsum',{$('#view').text('lorem/ipsum')});
         crossroads.routed.add(console.log, console); //log all routes
 
         //setup hasher
