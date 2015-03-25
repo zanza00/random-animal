@@ -1,15 +1,15 @@
 var DEFAULT_HASH = 'home', url = hasher.getBaseURL();
 
-//setup crossroads
-crossroads.addRoute('home');
-
-crossroads.addRoute('lorem');
-crossroads.addRoute('lorem/ipsum');
-crossroads.addRoute('photo/{id}', function(id){
+function pullSinglePhoto(id) {
     $('#result').text('photo #: ' + id);
+}
+
+//setup crossroads
+crossroads.addRoute('home',function(){});
+crossroads.addRoute('photo/{id}', function(id){
+    pullSinglePhoto(id);
 });
 crossroads.routed.add(console.log, console); //log all routes
-crossroads.parse('photo/');
 
 //setup hasher
 
