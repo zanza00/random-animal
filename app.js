@@ -34,17 +34,15 @@ function flickRandomPull() {
     console.log('flickRandomPull()');
     var animalChoices = ['owl', 'otter', 'alpaca', 'frog', 'cat'];
     var animalSearch = animalChoices[getRandomInt(0, animalChoices.length)];
-    document.title = animalSearch[0].toUpperCase() + animalSearch.slice(1) + ' is a Random Animal';
-    $("#favicon").attr('href', 'icons/' + animalSearch + '.png');
     $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + apiKey + '&format=json&nojsoncallback=1&sort=relevance&text=' + animalSearch,
         function (data) {
             var randInt = getRandomInt(0, data.photos.perpage);
+            //search the result
             $.each(data.photos.photo, function (i, item) {
 
                 if (i === randInt) {
-                    var photoDimension = 'z';
-                    var photoURL = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_' + photoDimension + '.jpg';
-                    pullSinglePhoto(animalSearch, item.id);
+                    console.log('changing hash');
+                    hasher.replaceHash('p/' + animalSearch + '/' + item.id); //replacing the URL triggers pullSinglePhoto
                     return false;
                 }
             });
@@ -52,18 +50,18 @@ function flickRandomPull() {
 }
 
 function pullSinglePhoto(animal, photoID) {
-    console.log('pullSinglePhoto()');
-    document.title = photoID + ' is a Random Animal';
-    $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=' + apiKey + '&format=json&nojsoncallback=1&photo_id=' + photoID,
-        function (data) {
-            $.each(data.sizes.size, function (i, item) {
+    console.log('pullSinglePhoto() photoID: ' + photoID);
+    //set the tile with the first letter uppercase
+    document.title = animal[0].toUpperCase() + animal.slice(1) + ' is a Random Animal';
+    //set the favicon using png in icons/
+    $("#favicon").attr('href', 'icons/' + animal + '.png');
+    $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=' + apiKey + '&photo_id=' + photoID + '&format=json&nojsoncallback=1',
+        function (item) {
+            var photoDimension = 'z';
+            var photoURL = 'http://farm' + item.photo.farm + '.static.flickr.com/' + item.photo.server + '/' + item.photo.id + '_' + item.photo.secret + '_' + photoDimension + '.jpg';
+            outputHTML(photoURL, item.photo.title._content, item.photo.owner.nsid, photoID, animal);
+            return false;
 
-                if (item.label === "Medium 640") {
-                    var photoURL = item.source;
-                    outputHTML(photoURL, 'TITLE', 'OWNER', photoID, animal);
-                    return false;
-                }
-            });
         });
 }
 
@@ -78,17 +76,13 @@ function outputHTML(photoURL, title, owner, id, animal) {
     }).appendTo("#image");
     $('#text').html(
         '<h2>' + title + '</h2>' +
-        '<a href="http://www.flickr.com/photos/' + owner + '/' + id + '"> Link to Original image on Flikr</a> <br>' +
+        '<a href="http://www.flickr.com/photos/' + owner + '/' + id + '"> Original on Flikr</a> - ' +
         '<a href="#/p/' + animal + '/' + id + '">Permalink</a>'
     );
     $('#background-image').css({
         'background-image': 'url(' + photoURL + ')'
     });
     console.log(hasher.getHash());
-    if (hasher.getHash() === 'random') {
-        console.log('changed hash');
-        hasher.replaceHash('p/' + animal + '/' + id);
-    }
     $('.loading').hide(400);
 }
 
