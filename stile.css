@@ -40,6 +40,7 @@ h2 {
     position: static;
     bottom: 0;
     left: 0;
+    font-style: italic;
 
     height: 50px; /* Height of the footer */
     width: 100%;
@@ -90,4 +91,9 @@ h2 {
     margin-right: auto;
     font-size: 26px;
     font-family: 'Open Sans', sans-serif;
+}
+
+p {
+    margin-top: 0px;
+    
 }
