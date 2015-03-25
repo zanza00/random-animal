@@ -7,7 +7,7 @@ crossroads.addRoute('random', function () {                     // #/random
     flickRandomChooser();                                       //invoke the method
 });
 crossroads.addRoute('{animal}/{id}', function (animal, id) {    // #/cat/4951178109
-    pullSinglePhoto(animal, id)                                 //invoke the method
+    pullSinglePhoto(animal, id);                                 //invoke the method
 });
 //crossroads.routed.add(console.log, console);                  //log all routes
 
@@ -48,6 +48,8 @@ function flickRandomChooser() {
 
 function pullSinglePhoto(animal, photoID) {
     document.title = animal[0].toUpperCase() + animal.slice(1) + ' is a Random Animal'; //set the tile with the first letter uppercase
+    $('#image').text('');                                       //erase the image
+    $('#text').text('');                                        //erase the text
     $("#favicon").attr('href', 'icons/' + animal + '.png');     //set the favicon using png in icons/
     $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=' + apiKey + '&photo_id=' + photoID + '&format=json&nojsoncallback=1',
         function (item) {
@@ -63,8 +65,8 @@ function outputHTML(photoURL, title, owner, id, animal) {
     $("<img>").attr({                                           //write the <img> attributes
         src: photoURL,
         'class': 'center',
-        alt: animal + ' is a Random Animal',
-        title: title,
+        alt: title ,
+        title: animal + ' is a Random Animal',
         id: 'animal-image'
     }).appendTo("#image");
     $('#text').html(                                            //write the textbox
@@ -81,8 +83,6 @@ function outputHTML(photoURL, title, owner, id, animal) {
 
 function reload() {
     $('.loading').show(250);                                    //display the loading gif
-    $('#image').text('');                                       //erase the image
-    $('#text').text('');                                        //erase the text
     hasher.setHash('random');                                   //replacing the url
 }
 
