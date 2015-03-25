@@ -2,41 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Building a router</title>
-    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script src="lib/signals.min.js"></script>
-    <script src="lib/crossroads.min.js"></script>
-    <script src="lib/hasher.min.js"></script>
-    <script>
-        var DEFAULT_HASH = 'home';
-
-        //setup crossroads
-        crossroads.addRoute('home', {});
-        crossroads.addRoute('lorem');
-        crossroads.addRoute('lorem/ipsum',{$('#view').text('lorem/ipsum')});
-        crossroads.routed.add(console.log, console); //log all routes
-
-        //setup hasher
-
-        //only required if you want to set a default value
-        if(! hasher.getHash()){
-            hasher.setHash(DEFAULT_HASH);
-        }
-
-        function parseHash(newHash, oldHash){
-            // second parameter of crossroads.parse() is the "defaultArguments" and should be an array
-            // so we ignore the "oldHash" argument to avoid issues.
-            crossroads.parse(newHash);
-        }
-        hasher.initialized.add(parseHash); //parse initial hash
-        hasher.changed.add(parseHash); //parse hash changes
-
-        hasher.init(); //start listening for hash changes
-
-    </script>
+    <title>example crossroads + hasher</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-
+<div id="wrapper">
     <ul>
         <li>
             <a href="#/home">home</a>
@@ -47,8 +17,23 @@
         <li>
             <a href="#/lorem/ipsum">lorem/ipsum</a>
         </li>
+        <li>
+            <a href="#/photo/123457">photo/123457</a>
+        </li>
     </ul>
-<div id="view"></div>
-
+</div>
+<div id="result"></div>
+<!--
+    required scripts:
+      * js-signals (http://millermedeiros.github.com/js-signals/)
+      * crossroads.js (http://millermedeiros.github.com/crossroads.js/)
+      * hasher (https://github.com/millermedeiros/hasher/)
+      * sample (https://gist.github.com/1109742)
+-->
+<script src="lib/signals.min.js"></script>
+<script src="lib/crossroads.min.js"></script>
+<script src="lib/hasher.min.js"></script>
+<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="sample-hasher_crossroads.js"></script>
 </body>
 </html>

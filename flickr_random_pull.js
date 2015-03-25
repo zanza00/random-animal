@@ -1,7 +1,7 @@
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
-function flickrPull() {
+function flickRandomPull() {
     var animalChoices = ['owl', 'otter', 'alpaca', 'frog', 'cat'];
     var animalSearch = animalChoices[getRandomInt(0, animalChoices.length)];
     //cambio il titolo della pagina, mettendo il nome dell'animale con la prima lettera maiuscola
@@ -24,7 +24,8 @@ function flickrPull() {
                     }).appendTo("#image");
                     $('#text').html(
                         '<h2>' + item.title + '</h2>' +
-                        '<a href="http://www.flickr.com/photos/' + item.owner + '/' + item.id +'"> Link to Original image on Flikr</a>'
+                        '<a href="http://www.flickr.com/photos/' + item.owner + '/' + item.id +'"> Link to Original image on Flikr</a> <br>' +
+                        '<a href="#/photo/' + item.id +'">Permalink</a>'
                     );
                     $('.loading').hide(400);
                     $('#background-image').css({
@@ -40,10 +41,10 @@ function reload() {
     $('.loading').show(250);
     $('#image').text('');
     $('#text').text('');
-    flickrPull()
+    flickRandomPull()
 }
 
 
 $(function () {
-    flickrPull();
+    flickRandomPull();
 });
