@@ -4,6 +4,7 @@ var apiKey = '6902943f0a9e5a3d4e84475e392ca8e7';                //api key for fl
 
 //setup crossroads
 crossroads.addRoute('random', function () {                     // #/random
+    $('.loading').show(250);                                    //display the loading gif for when the page reloads
     flickRandomChooser();                                       //invoke the method
 });
 crossroads.addRoute('{animal}/{id}', function (animal, id) {    // #/cat/4951178109
@@ -78,12 +79,6 @@ function outputHTML(photoURL, title, owner, id, animal) {
         'background-image': 'url(' + photoURL + ')'             //set the background image
     });
     $('.loading').hide(400);                                    //hide the loading gif
-}
-
-
-function reload() {
-    $('.loading').show(250);                                    //display the loading gif
-    hasher.setHash('random');                                   //replacing the url
 }
 
 function showAbout() {
