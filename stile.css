@@ -17,7 +17,8 @@ img.center {
 
 h2 {
     font-size: 36px;
-    margin-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 10px;
 }
 
 #container {
@@ -39,6 +40,7 @@ h2 {
     position: static;
     bottom: 0;
     left: 0;
+    font-style: italic;
 
     height: 50px; /* Height of the footer */
     width: 100%;
@@ -70,7 +72,6 @@ h2 {
     background-position: 0% 10%;
     -webkit-filter: grayscale(70%) blur(5px);
     filter: grayscale(70%) blur(5px);
-    filter: grayscale(70%) blur(5px);
 }
 
 #text-box {
@@ -90,4 +91,9 @@ h2 {
     margin-right: auto;
     font-size: 26px;
     font-family: 'Open Sans', sans-serif;
+}
+
+p {
+    margin-top: 0px;
+    
 }
