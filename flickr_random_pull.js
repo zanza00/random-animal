@@ -1,7 +1,8 @@
 var DEFAULT_HASH = 'home', url = hasher.getBaseURL();
 var apiKey = '6902943f0a9e5a3d4e84475e392ca8e7'; //api key for flickr
 //setup crossroads
-crossroads.addRoute('home',function(){ flickRandomPull() }); // #/home
+crossroads.addRoute('home'); // #/home
+crossroads.addRoute('random',function(){ flickRandomPull() }); // #/random
 crossroads.addRoute('photo/{id}', function(id){ pullSinglePhoto(id) }); // #/photo/{number}
 crossroads.routed.add(console.log, console); //log all routes
 
@@ -26,6 +27,7 @@ function getRandomInt(min, max) {
 }
 
 function flickRandomPull() {
+    console.log('flickRandomPull()');
     var animalChoices = ['owl', 'otter', 'alpaca', 'frog', 'cat'];
     var animalSearch = animalChoices[getRandomInt(0, animalChoices.length)];
     document.title = animalSearch[0].toUpperCase() + animalSearch.slice(1) + ' is a Random Animal';
@@ -62,6 +64,7 @@ function flickRandomPull() {
 }
 
 function pullSinglePhoto(photoID) {
+    console.log('pullSinglePhoto()');
     document.title = photoID + ' is a Random Animal';
     $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key='+ apiKey +'&format=json&nojsoncallback=1&photo_id=' + photoID,
         function (data) {
@@ -98,7 +101,7 @@ function reload() {
     $('.loading').show(250);
     $('#image').text('');
     $('#text').text('');
-    hasher.setHash('home');
+    hasher.setHash('random');
 }
 
 function showAbout(){
