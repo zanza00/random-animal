@@ -13,13 +13,14 @@ crossroads.addRoute('about', function () {                      // #/about
 });
 crossroads.addRoute('{word}/{id}', function (word, id) {        // #/cat/4951178109
     if (animalChoices.indexOf(word) != -1) {                    //check if the first word is in the animal array
-        pullSingleAnimalPhoto(word, id);                        // animal is OK
+        preparePageIsAnimal(word, id);                        // animal is OK
     } else {
         switch (word) {
             case 'photo':
-
+                preparePagePhoto(id);
+                break;
             default :
-                $('#text').text(word + ' is not a valid choice');      //error message
+                wrongURL(word);
         }
     }
 });
@@ -53,44 +54,66 @@ function flickRandomAnimalChooser() {
             $.each(data.photos.photo, function (i, item) {      //search the result
 
                 if (i === randInt) {                            //find the selected row
-                    hasher.replaceHash(animalSearch + '/' + item.id); //replacing the URL triggers pullSingleAnimalPhoto
+                    hasher.replaceHash(animalSearch + '/' + item.id); //replacing the URL triggers preparePageIsAnimal
                     return false;                               //exit
                 }
             });
         });
 }
 
-function pullSingleAnimalPhoto(animal, photoID) {
+function preparePageIsAnimal(animal, photoID) {
     document.title = animal[0].toUpperCase() + animal.slice(1) + ' is a Random Animal'; //set the tile with the first letter uppercase
     $('#image').text('');                                       //erase the image
     $('#text').text('');                                        //erase the text
     $("#favicon").attr('href', 'icons/' + animal + '.png');     //set the favicon using png in icons/
-    pullFlickrPhoto(animal, photoID);
-
-}
-
-function pullFlickrPhoto(word, photoID) {
     $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=' + apiKey + '&photo_id=' + photoID + '&format=json&nojsoncallback=1',
         function (item) {
             var photoDimension = 'z';                           //calculate the url for the photo @url http://goo.gl/1zRIE2
             var photoURL = 'http://farm' + item.photo.farm + '.static.flickr.com/' + item.photo.server + '/' + item.photo.id + '_' + item.photo.secret + '_' + photoDimension + '.jpg';
-            outputHTML(photoURL, item.photo.title._content, item.photo.owner.nsid, photoID, word);
+            outputHTML(photoURL, item.photo.title._content, item.photo.owner.nsid, photoID, animal + ' is a Random Animal',animal);
             return false;
+        });
 
+}
+
+function preparePagePhoto(photoID) {
+    document.title = 'flickr image';                            //set title to generic photo
+    $('#image').text('');                                       //erase the image
+    $('#text').text('');                                        //erase the text
+    $("#favicon").attr('href', 'icons/photo.png');              //set the favicon using generic image
+    $('#reload-link').text('I Want a Random Animal!');          //change the random link text
+    $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=' + apiKey + '&photo_id=' + photoID + '&format=json&nojsoncallback=1',
+        function (item) {
+            var photoDimension = 'z';                           //calculate the url for the photo @url http://goo.gl/1zRIE2
+            var photoURL = 'http://farm' + item.photo.farm + '.static.flickr.com/' + item.photo.server + '/' + item.photo.id + '_' + item.photo.secret + '_' + photoDimension + '.jpg';
+            outputHTML(photoURL, item.photo.title._content, item.photo.owner.nsid, photoID, 'This is not an Animal (maybe)', 'photo');
+            return false;
         });
 }
 
-function outputHTML(photoURL, title, owner, id, word) {         //write the HTML for the #image and #text
-    var imgTitle = (animalChoices.indexOf(word) != -1) ? word + ' is a Random Animal' : word + ' is not an Animal';
+function wrongURL(wrongWord) {
+    document.title = 'i dont know' + wrongWord;                 //set title to malformed word
+    $('#image').text('');                                       //erase the image
+    $('#text').text('');                                        //erase the text
+    $("#favicon").attr('href', 'icons/photo.png');              //set the favicon using generic image
+    $('#reload-link').text('I Want a Random Animal!');          //change the random link text
+    var photoURL = 'http://farm5.static.flickr.com/4114/4893865426_ace835cfca_z.jpg';
+    outputHTML(photoURL, 'what is ' + wrongWord + '?', '29316666@N06', '4893865426', 'Something went wrong, enjoy this mountain', 'photo');
+    return false;
+
+
+}
+
+function outputHTML(photoURL, imgTitle, owner, id, imgMouse, word) {  //write the HTML for the #image and #text
     $("<img>").attr({                                           //write the <img> attributes
         src: photoURL,
         'class': 'center',
-        alt: title,
-        title: imgTitle,                                        //mouseover
+        alt: imgTitle,
+        title: imgMouse,                                        //mouseover
         id: 'animal-image'
     }).appendTo("#image");
     $('#text').html(                                            //write the textbox
-        '<h2>' + title + '</h2>' +
+        '<h2>' + imgTitle + '</h2>' +
         '<a href="http://www.flickr.com/photos/' + owner + '/' + id + '" target="_blank"> Original on Flikr</a> - ' +
         '<a href="#/' + word + '/' + id + '">Permalink</a>'
     );
