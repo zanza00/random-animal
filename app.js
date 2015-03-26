@@ -131,7 +131,7 @@ function prepareErrorPage(wrongThing) {
  */
 function showAbout() {
     document.title = 'About Page';                              //set title about
-    $("#favicon").attr('href', 'icons/about.png');              //set the favicon using about icons
+    $("#favicon").attr('href', 'icons/favicon.png');            //set the favicon using about icons
     $('#reload-link').text('I Want a Random Animal!');          //change the random link text
     var photoURL = 'http://farm9.static.flickr.com/8598/15870245063_2ab1004ff2_z.jpg';
     printImage(photoURL, 'fetching', '29316666@N06', '15870245063', 'fetching', 'about');
