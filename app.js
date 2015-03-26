@@ -6,16 +6,21 @@ var animalChoices = ['owl', 'otter', 'alpaca', 'frog', 'cat'];  //array with the
 //setup crossroads
 crossroads.addRoute('random', function () {                     // #/random
     $('.loading').show(250);                                    //display the loading gif for when the page reloads
-    flickRandomChooser();                                       //invoke the method
+    flickRandomAnimalChooser();                                       //invoke the method
 });
-crossroads.addRoute('about', function () {
+crossroads.addRoute('about', function () {                      // #/about
     showAbout();
 });
-crossroads.addRoute('{animal}/{id}', function (animal, id) {    // #/cat/4951178109
-    if (animalChoices.indexOf(animal) != -1) {                  //check if the first word is valid
-        pullSinglePhoto(animal, id);                            // animal is OK, invoke the method
+crossroads.addRoute('{word}/{id}', function (word, id) {        // #/cat/4951178109
+    if (animalChoices.indexOf(word) != -1) {                    //check if the first word is in the animal array
+        pullSingleAnimalPhoto(word, id);                        // animal is OK
     } else {
-        $('#text').text(animal + ' is not a valid choice')      //error message
+        switch (word) {
+            case 'photo':
+
+            default :
+                $('#text').text(word + ' is not a valid choice');      //error message
+        }
     }
 });
 //crossroads.routed.add(console.log, console);                  //log all routes
@@ -40,7 +45,7 @@ function getRandomInt(min, max) {                               //see MDN for in
     return Math.floor(Math.random() * (max - min)) + min;       //@url http://goo.gl/tjFMIA
 }
 
-function flickRandomChooser() {
+function flickRandomAnimalChooser() {
     var animalSearch = animalChoices[getRandomInt(0, animalChoices.length)];  //extract the random animal to search
     $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + apiKey + '&format=json&nojsoncallback=1&sort=relevance&text=' + animalSearch,
         function (data) {
@@ -48,40 +53,46 @@ function flickRandomChooser() {
             $.each(data.photos.photo, function (i, item) {      //search the result
 
                 if (i === randInt) {                            //find the selected row
-                    hasher.replaceHash(animalSearch + '/' + item.id); //replacing the URL triggers pullSinglePhoto
+                    hasher.replaceHash(animalSearch + '/' + item.id); //replacing the URL triggers pullSingleAnimalPhoto
                     return false;                               //exit
                 }
             });
         });
 }
 
-function pullSinglePhoto(animal, photoID) {
+function pullSingleAnimalPhoto(animal, photoID) {
     document.title = animal[0].toUpperCase() + animal.slice(1) + ' is a Random Animal'; //set the tile with the first letter uppercase
     $('#image').text('');                                       //erase the image
     $('#text').text('');                                        //erase the text
     $("#favicon").attr('href', 'icons/' + animal + '.png');     //set the favicon using png in icons/
+    pullFlickrPhoto(animal, photoID);
+
+}
+
+function pullFlickrPhoto(word, photoID) {
     $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=' + apiKey + '&photo_id=' + photoID + '&format=json&nojsoncallback=1',
         function (item) {
             var photoDimension = 'z';                           //calculate the url for the photo @url http://goo.gl/1zRIE2
             var photoURL = 'http://farm' + item.photo.farm + '.static.flickr.com/' + item.photo.server + '/' + item.photo.id + '_' + item.photo.secret + '_' + photoDimension + '.jpg';
-            outputHTML(photoURL, item.photo.title._content, item.photo.owner.nsid, photoID, animal);
+            outputHTML(photoURL, item.photo.title._content, item.photo.owner.nsid, photoID, word);
             return false;
 
         });
 }
 
-function outputHTML(photoURL, title, owner, id, animal) {
+function outputHTML(photoURL, title, owner, id, word) {         //write the HTML for the #image and #text
+    var imgTitle = (animalChoices.indexOf(word) != -1) ? word + ' is a Random Animal' : word + ' is not an Animal';
     $("<img>").attr({                                           //write the <img> attributes
         src: photoURL,
         'class': 'center',
         alt: title,
-        title: animal + ' is a Random Animal',
+        title: imgTitle,                                        //mouseover
         id: 'animal-image'
     }).appendTo("#image");
     $('#text').html(                                            //write the textbox
         '<h2>' + title + '</h2>' +
         '<a href="http://www.flickr.com/photos/' + owner + '/' + id + '" target="_blank"> Original on Flikr</a> - ' +
-        '<a href="#/' + animal + '/' + id + '">Permalink</a>'
+        '<a href="#/' + word + '/' + id + '">Permalink</a>'
     );
     $('#background-image').css({
         'background-image': 'url(' + photoURL + ')'             //set the background image
