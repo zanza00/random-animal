@@ -117,6 +117,7 @@ function preparePhotoPage(photoID) {
  */
 function prepareErrorPage(wrongThing) {
     document.title = 'I don\'t know ' + wrongThing;             //set title to malformed word
+
     $("#favicon").attr('href', 'icons/photo.png');              //set the favicon using generic image
     $('#reload-link').text('I Want a Random Animal!');          //change the random link text
     hasher.replaceHash('unknown/command');
@@ -130,10 +131,13 @@ function prepareErrorPage(wrongThing) {
  * Show the special page for about
  */
 function showAbout() {
+    var photoURL = 'http://farm9.static.flickr.com/8598/15870245063_2ab1004ff2_z.jpg';
+    printImage(photoURL, 'fetching', '29316666@N06', '15870245063', 'fetching', 'about');
+    document.title = 'About Page';                              //set title about
+    $("#favicon").attr('href', 'icons/about.png');              //set the favicon using about icons
+    $('#text').load('about.html');                              //load the html of the file about
+    $('#reload-link').text('I Want a Random Animal!');          //change the random link text
     $('.loading').hide(400);                                    //hide the loading gif
-
-    $('#text').load('about.html');
-    //photo http://farm9.static.flickr.com/8598/15870245063_2ab1004ff2_z.jpg
 }
 
 
@@ -141,7 +145,7 @@ function showAbout() {
  * Actual insert of the image, background, title and link to original photo
  */
 function printImage(photoURL, imgTitle, owner, id, imgMouse, word) {  //write the HTML for the #image and #text
-    var textCached = $('#text');
+    var textCached = $('#text');                                //cache the #text div for performance
     $('#image').text('');                                       //erase the image
     textCached.text('');                                        //erase the text
     $("<img>").attr({                                           //write the <img> attributes
