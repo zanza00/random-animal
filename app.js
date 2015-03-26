@@ -7,6 +7,9 @@ crossroads.addRoute('random', function () {                     // #/random
     $('.loading').show(250);                                    //display the loading gif for when the page reloads
     flickRandomChooser();                                       //invoke the method
 });
+crossroads.addRoute('about', function () {
+    showAbout();
+});
 crossroads.addRoute('{animal}/{id}', function (animal, id) {    // #/cat/4951178109
     pullSinglePhoto(animal, id);                                 //invoke the method
 });
@@ -66,7 +69,7 @@ function outputHTML(photoURL, title, owner, id, animal) {
     $("<img>").attr({                                           //write the <img> attributes
         src: photoURL,
         'class': 'center',
-        alt: title ,
+        alt: title,
         title: animal + ' is a Random Animal',
         id: 'animal-image'
     }).appendTo("#image");
@@ -83,5 +86,10 @@ function outputHTML(photoURL, title, owner, id, animal) {
 
 function showAbout() {
     //TODO add about
-
+    $('.loading').hide(400);                                    //hide the loading gif
+    $('#text').text('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dapibus consequat nisl, vel vestibulum enim bibendum vitae. Vestibulum tempor, sem non tincidunt vehicula, nisl purus feugiat erat, eget tincidunt arcu eros in diam. Morbi facilisis libero quis ligula sodales eleifend. Quisque condimentum blandit auctor. Etiam mattis sed justo nec malesuada. Etiam vel sapien in elit commodo elementum eget nec nibh. Nam vitae felis non sem elementum tincidunt eget vitae urna. Mauris quis diam nisl. Integer sed risus lobortis enim dictum vehicula. Cras vitae erat eu velit aliquet ornare. Donec sapien turpis, aliquam non faucibus quis, malesuada vitae sem. Vestibulum tempor arcu metus, et elementum diam congue ac. Proin dictum tempus diam ac tempus. Maecenas fringilla sapien vitae turpis tincidunt pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit.' +
+    'Donec id magna tristique, condimentum elit at, viverra ligula. Integer auctor ac sem rutrum gravida. Aliquam posuere blandit sapien. Morbi nec odio dictum, consequat justo ac, congue dolor. Mauris eu convallis magna. Pellentesque non libero scelerisque, varius nisl sit amet, aliquet metus. Aenean maximus convallis purus non dapibus. Maecenas pharetra imperdiet sapien. In elementum magna et mauris rutrum semper. Duis interdum massa nulla, quis facilisis metus porta non. Sed eros ante, sodales a nulla vitae, eleifend placerat nisi. Fusce orci tellus, tristique ut ultricies et, faucibus at mauris.' +
+    'Nullam volutpat faucibus mollis. Suspendisse sit amet placerat tellus. Praesent sit amet tellus consectetur, dignissim eros at, facilisis elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus viverra nisl erat, eget aliquam nulla gravida nec. Aenean euismod eget risus in placerat. Nam a ligula condimentum, aliquet diam vitae, semper tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin a egestas tellus. In et elementum mi, id mattis ligula. Aliquam consectetur nec magna quis finibus. Suspendisse fringilla sed urna sodales semper.)' +
+    'Vestibulum id felis ut felis imperdiet scelerisque id tempus turpis. Phasellus feugiat ultrices lorem ut eleifend. Suspendisse potenti. Nunc efficitur pellentesque aliquam. Etiam condimentum felis iaculis tortor egestas eleifend. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum congue dolor eget magna ultricies, et lacinia lectus sagittis. Curabitur a scelerisque leo. Nulla et enim lacus. Donec at sem sed nibh accumsan lacinia hendrerit at velit. Pellentesque in dapibus purus. Pellentesque ultrices tincidunt mauris, nec commodo sem dapibus in.' +
+    'Pellentesque feugiat nisl a elit tempor efficitur. Aliquam sit amet odio facilisis, ullamcorper arcu sit amet, pharetra massa. Nulla vel lacus ante. Nullam mattis commodo iaculis. Fusce id nulla molestie dolor sodales porttitor non non magna. Etiam viverra elit a nunc luctus, id bibendum ante semper. Nam hendrerit quis eros nec convallis. Maecenas sed felis turpis. Maecenas orci ligula, eleifend tempus quam id, posuere pharetra neque. Praesent in turpis sed est tincidunt efficitur. Phasellus elementum pharetra dolor, a consectetur nisl vehicula nec. Nunc fermentum ultricies massa eu dictum. Aenean commodo quis purus ac tempus. ');
 }
