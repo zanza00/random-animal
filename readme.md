@@ -1,5 +1,5 @@
 # Random Animals
-_It's for someone speshial who can't decide which animal is in that specific moment_
+_It's for someone speshial who can't decide which animal is in that specific moment, I Love You_
 
 ##Why
 

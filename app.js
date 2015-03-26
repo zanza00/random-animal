@@ -92,7 +92,7 @@ function preparePagePhoto(photoID) {
 }
 
 function wrongURL(wrongWord) {
-    document.title = 'i dont know' + wrongWord;                 //set title to malformed word
+    document.title = 'I don\'t know ' + wrongWord;                 //set title to malformed word
     $('#image').text('');                                       //erase the image
     $('#text').text('');                                        //erase the text
     $("#favicon").attr('href', 'icons/photo.png');              //set the favicon using generic image
