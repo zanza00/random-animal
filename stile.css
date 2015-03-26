@@ -34,6 +34,12 @@ h2 {
     padding-bottom: 20px;
 }
 
+p.about {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
 #reload {
     color: darkgreen;
     text-align: center;
@@ -85,15 +91,23 @@ h2 {
     font-size: 10px;
 }
 
-#about {
-    width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 26px;
-    font-family: 'Open Sans', sans-serif;
-}
-
 p {
     margin-top: 0px;
     
+}
+
+.italics {
+    font-style: italic;
+}
+
+.quote {
+    margin-top: 35px;
+    text-align: center;
+    font-style: normal;
+}
+
+.quote-sign {
+    text-align: right;
+    margin-left: 45%;
+    font-style: italic;
 }
