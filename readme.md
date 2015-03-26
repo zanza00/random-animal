@@ -22,7 +22,7 @@ This site uses [Flickr API](https://www.flickr.com/services/api/) to search imag
 You can find the icons at [Game-Icons](http://game-icons.net/), the spinning icon is from [Preloaders](http://preloaders.net/)
 
 ##Redistribuite
-You cam freely hack away :)
+You can freely hack away :)
 
 
 
