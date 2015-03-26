@@ -21,6 +21,8 @@ crossroads.addRoute('{word}/{id}', function (word, id) {        // #/first-part/
             case 'photo':                                       //first part is photo #/photo/15870245063
                 preparePhotoPage(id);
                 break;
+            case 'unknown':                                     //hash for wrong command, with this case
+                break;                                          //it doesn't trigger the default behavior
             default :
                 prepareErrorPage(word);
         }
@@ -117,6 +119,7 @@ function prepareErrorPage(wrongThing) {
     document.title = 'I don\'t know ' + wrongThing;             //set title to malformed word
     $("#favicon").attr('href', 'icons/photo.png');              //set the favicon using generic image
     $('#reload-link').text('I Want a Random Animal!');          //change the random link text
+    hasher.replaceHash('unknown/command');
     var photoURL = 'http://farm5.static.flickr.com/4114/4893865426_ace835cfca_z.jpg';
     printImage(photoURL, 'what is ' + wrongThing + '?', '29316666@N06', '4893865426', 'Something went wrong, enjoy this mountain', 'photo');
     return false;
