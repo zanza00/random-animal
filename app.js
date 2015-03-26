@@ -1,6 +1,7 @@
 var DEFAULT_HASH = 'random';                                    //define the default hash of the site
 var url = hasher.getBaseURL();                                  //get the domain url
 var apiKey = '6902943f0a9e5a3d4e84475e392ca8e7';                //api key for flickr
+var animalChoices = ['owl', 'otter', 'alpaca', 'frog', 'cat'];  //array with the animal choices
 
 //setup crossroads
 crossroads.addRoute('random', function () {                     // #/random
@@ -11,9 +12,14 @@ crossroads.addRoute('about', function () {
     showAbout();
 });
 crossroads.addRoute('{animal}/{id}', function (animal, id) {    // #/cat/4951178109
-    pullSinglePhoto(animal, id);                                 //invoke the method
+    if (animalChoices.indexOf(animal) != -1) {                  //check if the first word is valid
+        pullSinglePhoto(animal, id);                            // animal is OK, invoke the method
+    } else {
+        $('#text').text(animal + ' is not a valid choice')      //error message
+    }
 });
 //crossroads.routed.add(console.log, console);                  //log all routes
+
 
 //setup hasher
 hasher.initialized.add(parseHash);                              //parse initial hash
@@ -35,7 +41,6 @@ function getRandomInt(min, max) {                               //see MDN for in
 }
 
 function flickRandomChooser() {
-    var animalChoices = ['owl', 'otter', 'alpaca', 'frog', 'cat'];
     var animalSearch = animalChoices[getRandomInt(0, animalChoices.length)];  //extract the random animal to search
     $.getJSON('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + apiKey + '&format=json&nojsoncallback=1&sort=relevance&text=' + animalSearch,
         function (data) {
